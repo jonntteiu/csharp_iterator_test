@@ -22,9 +22,9 @@ namespace Program
     public class Program
     {
         public delegate IEnumerable<Dummy> TimeItMethod();
-        public static readonly int MAX_ITEM_COUNT = 200000000;
-        public static readonly bool SHOW_GENERATED_ITEMS = false;
-        public static readonly bool SIMULATE_DELAY = false;
+        public static readonly int MAX_ITEM_COUNT = 10;
+        public static readonly bool SHOW_GENERATED_ITEMS = true;
+        public static readonly bool SIMULATE_DELAY = true;
         public static readonly int DELAY_TIME = 1000;
 
         public static IEnumerable<Dummy> WithIterator()
@@ -57,7 +57,7 @@ namespace Program
         public static void TimeIt(TimeItMethod method)
         {
             Stopwatch stopwatch = new();
-            TimeLog($"Iniciando o método: '{method.Method.Name}'.");
+            TimeLog($"Iniciando o método: '{method.Method.Name}'");
             stopwatch.Start();
             foreach (Dummy item in method.Invoke())
             {
@@ -67,7 +67,7 @@ namespace Program
                 }
             }
             stopwatch.Stop();
-            TimeLog($"Finalizado o método '{method.Method.Name}' após {TimeString(stopwatch.Elapsed)}.");
+            TimeLog($"Finalizado o método '{method.Method.Name}' após {TimeString(stopwatch.Elapsed)}");
         }
 
         public static string TimeString(TimeSpan elapsedTime)
@@ -108,6 +108,30 @@ namespace Program
                 else
                 {
                     results.Add($"{elapsedTime.Seconds} segundo");
+                }
+            }
+
+            if (elapsedTime.Milliseconds > 0)
+            {
+                if (elapsedTime.Milliseconds > 1)
+                {
+                    results.Add($"{elapsedTime.Milliseconds} milisegundos");
+                }
+                else
+                {
+                    results.Add($"{elapsedTime.Milliseconds} milisegundos");
+                }
+            }
+
+            if (elapsedTime.Nanoseconds > 0)
+            {
+                if (elapsedTime.Nanoseconds > 1)
+                {
+                    results.Add($"{elapsedTime.Nanoseconds} nanosegundos");
+                }
+                else
+                {
+                    results.Add($"{elapsedTime.Nanoseconds} nanosegundos");
                 }
             }
 
