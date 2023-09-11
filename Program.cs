@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Program
@@ -22,9 +22,9 @@ namespace Program
     public class Program
     {
         public delegate IEnumerable<Dummy> TimeItMethod();
-        public static readonly int MAX_ITEM_COUNT = 10;
-        public static readonly bool SHOW_GENERATED_ITEMS = true;
-        public static readonly bool SIMULATE_DELAY = true;
+        public static readonly int MAX_ITEM_COUNT = 200000000;
+        public static readonly bool SHOW_GENERATED_ITEMS = false;
+        public static readonly bool SIMULATE_DELAY = false;
         public static readonly int DELAY_TIME = 1000;
 
         public static IEnumerable<Dummy> WithIterator()
@@ -67,7 +67,60 @@ namespace Program
                 }
             }
             stopwatch.Stop();
-            TimeLog($"Finalizado o método '{method.Method.Name}' após {stopwatch.Elapsed.Seconds} segundos.");
+            TimeLog($"Finalizado o método '{method.Method.Name}' após {TimeString(stopwatch.Elapsed)}");
+        }
+
+        public static string TimeString(TimeSpan elapsedTime)
+        {
+            List<string> results = new();
+            string result = string.Empty;
+
+            if (elapsedTime.Hours > 0)
+            {
+                if (elapsedTime.Hours > 1)
+                {
+                    results.Add($"{elapsedTime.Hours} horas");
+                }
+                else
+                {
+                    results.Add($"{elapsedTime.Hours} hora");
+                }
+            }
+
+            if (elapsedTime.Minutes > 0)
+            {
+                if (elapsedTime.Minutes > 1)
+                {
+                    results.Add($"{elapsedTime.Minutes} minutos");
+                }
+                else
+                {
+                    results.Add($"{elapsedTime.Minutes} minuto");
+                }
+            }
+
+            if (elapsedTime.Seconds > 0)
+            {
+                if (elapsedTime.Seconds > 1)
+                {
+                    results.Add($"{elapsedTime.Seconds} segundos");
+                }
+                else
+                {
+                    results.Add($"{elapsedTime.Seconds} segundo");
+                }
+            }
+
+            for (int i = 0; i < results.Count; i++)
+            {
+                result += $"{results[i]} ";
+                if (results.Count > 1 && i == results.Count - 2)
+                {
+                    result += "e ";
+                }
+            }
+
+            return result;
         }
 
         public static void Main(string[] args)
