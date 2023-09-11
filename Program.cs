@@ -67,7 +67,7 @@ namespace Program
                 }
             }
             stopwatch.Stop();
-            TimeLog($"Finalizado o método '{method.Method.Name}' após {TimeString(stopwatch.Elapsed)}");
+            TimeLog($"Finalizado o método '{method.Method.Name}' após {TimeString(stopwatch.Elapsed)}.");
         }
 
         public static string TimeString(TimeSpan elapsedTime)
